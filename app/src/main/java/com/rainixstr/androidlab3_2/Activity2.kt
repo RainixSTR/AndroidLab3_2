@@ -1,6 +1,7 @@
 package com.rainixstr.androidlab3_2
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -10,22 +11,19 @@ class Activity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivitySecondBinding.inflate(layoutInflater)
-        binding.bnToActivity1.setOnClickListener {
-            finish()
-        }
-        binding.bnToActivity3.setOnClickListener {
-            val intent = Intent(this, Activity3::class.java)
-            startActivityForResult(intent, 0)
-        }
+        binding.bnToActivity1.setOnClickListener { toActivity1() }
+        binding.bnToActivity3.setOnClickListener { toActivity3() }
         binding.bnToAboutActivity.setOnItemSelectedListener { toAboutActivity(it) }
         setContentView(binding.root)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == 1) {
-            finish()
-        }
+    private fun toActivity1() {
+        startActivity(Intent(this, MainActivity::class.java).setFlags(
+            FLAG_ACTIVITY_CLEAR_TOP))
+    }
+
+    private fun toActivity3() {
+        startActivity(Intent(this, Activity3::class.java))
     }
 
     private fun toAboutActivity(menuItem: MenuItem) : Boolean {
